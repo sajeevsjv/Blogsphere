@@ -12,7 +12,6 @@ function setaccessControl(access_types){
 
 router.post("/signup",userController.signup);
 router.get("/getallusers",setaccessControl("1"),userController.getAllUsers);
-router.get("/getsingleuser/:id",setaccessControl("1,2,3"),userController.getSingleUser);
-router.post("/shippingadress/:id",setaccessControl("2,3"),userController.setShippingAdress);
+router.get("/getsingleuser/:id",setaccessControl("1,2"),userController.getSingleUser);
 
 module.exports = router;

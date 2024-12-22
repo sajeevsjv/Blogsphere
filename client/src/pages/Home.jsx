@@ -1,16 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
 
 const Home = () => {
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  
   return (
     <>
     <Navbar />
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 mt-16  min-h-screen">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 px-6 text-center">
+      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-28 px-6 text-center">
         <h1 className="text-4xl font-bold md:text-5xl">Welcome to BlogSphere</h1>
         <p className="mt-4 text-lg md:text-xl">
           Dive into the world of ideas, stories, and insights shared by amazing writers.
@@ -66,13 +69,14 @@ const Home = () => {
           Join our community of bloggers and readers. Share your thoughts, ideas, and stories!
         </p>
         <button
-          onClick={() => navigate("/create")}
+          onClick={() => navigate("/addblog")}
           className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold shadow-md hover:bg-blue-600 transition"
         >
           Write a Blog
         </button>
       </div>
     </div>
+    <Footer />
     </>
   );
   

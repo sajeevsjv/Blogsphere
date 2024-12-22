@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { DataContext } from "../components/DataProvider";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useContext(DataContext);
+
 
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white shadow-md top-0 fixed  w-full">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         {/* Left Section: Navigation Links */}
         <div className="hidden md:flex space-x-6">
@@ -38,19 +43,31 @@ const Navbar = () => {
 
         {/* Right Section: Sign In / Sign Up */}
         <div className="hidden md:flex space-x-4">
-          <Link
-            to="/signin"
-            className="px-4 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
-          >
-            Sign In
-          </Link>
-          <Link
-            to="/signup"
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition"
-          >
-            Sign Up
-          </Link>
+          {isLoggedIn ? (
+            <Link
+              to="/profile"
+              className="px-4 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
+            >
+              My Profile
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="px-4 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
+              >
+                Sign In
+              </Link>
+              <Link
+                to="/signup"
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
+
 
         {/* Hamburger Menu for Mobile */}
         <div className="block md:hidden">

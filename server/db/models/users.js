@@ -10,33 +10,14 @@ const users = new mongoose.Schema({
         required: true
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
     user_type: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user_types"
     },
-    address : [{
-        type : Object,
-     }],
-    orders : {
-        type : [mongoose.Schema.ObjectId],
-        "ref" : "Products"
-    },
-    cart: [
-        {
-            product: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Products", 
-            },
-            quantity: {
-                type: Number,
-                required: true,
-                default: 1
-            }
-        }
-    ]
-    
+ 
 })
 
 module.exports = mongoose.model("users", users);

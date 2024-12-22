@@ -9,5 +9,7 @@ function setaccessControl(access_types){
     }
 }
 
+router.get("/categories",setaccessControl("1,2"),blogController.loadCategories);
+
 
 module.exports = router;
