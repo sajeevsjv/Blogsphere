@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useState } from "react";
 
 const AddBlog = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const AddBlog = () => {
     tags: "",
   });
   
+  useState(() =>{
   const loadCategories = async ()=>{
     try{
       const authToken = localStorage.getItem("authToken");
@@ -30,6 +32,8 @@ const AddBlog = () => {
       console.log("error :",error.response || error);
     }
   }
+  loadCategories();
+},[])
   const handleChange = (e) => {
     const { name, value } = e.target;
 
