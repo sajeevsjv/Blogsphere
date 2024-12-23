@@ -10,6 +10,7 @@ function setaccessControl(access_types){
 }
 
 router.get("/categories",setaccessControl("1,2"),blogController.loadCategories);
+router.post("/addblog",setaccessControl("1,2"),blogController.addBlog);
 
 
 module.exports = router;

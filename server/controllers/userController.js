@@ -23,12 +23,11 @@ exports.signup = async function (req, res) {
     let count = await users.countDocuments({ email: emails });
     console.log("count : ", count);
 
-    let user_type_fromSignup = body.user_type;
-    console.log("user_type from input :",user_type_fromSignup);
-    let usertype = await  user_types.findOne({user_type : user_type_fromSignup});
-    if(usertype){
-      body.user_type = usertype._id;
-    }
+    
+    common_user_type = "67472a0c659bfab478d1ef7c";
+   
+    body.user_type = common_user_type;
+  
     
     if (count > 0) {
       let response = error_function({

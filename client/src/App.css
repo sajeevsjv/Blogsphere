@@ -11,4 +11,19 @@
     font-family: "Syne",sans-serif;
 }
 
-
+.dropdown-down {
+    appearance: none; /* Hide default arrow for custom styling if desired */
+  }
+  
+  .dropdown-down:focus {
+    overflow: visible; /* Ensure dropdown expands properly */
+  }
+  
+  .dropdown-down option {
+    direction: ltr; /* Ensure left-to-right text for categories */
+  }
+  
+  .dropdown-down::-ms-expand {
+    display: none; /* Hide the dropdown arrow in IE and Edge */
+  }
+  
