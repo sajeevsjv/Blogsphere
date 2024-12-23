@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 
 const AddBlog = () => {
   const [formData, setFormData] = useState({
@@ -118,7 +119,9 @@ const AddBlog = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <>
+    <Navbar />
+    <div className="container mx-auto mt-24 px-4 py-8">
       <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
         Create a New Blog
       </h2>
@@ -230,6 +233,7 @@ const AddBlog = () => {
         </button>
       </form>
     </div>
+    </>
   );
 };
 

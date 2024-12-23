@@ -1,35 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { DataContext } from "../components/DataProvider";
-
-
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isLoggedIn, setIsLoggedIn } = useContext(DataContext);
 
+  // Set login state based on localStorage
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      setIsLoggedIn(true);
+    }
+  }, [setIsLoggedIn]);
+
+  const navigate = useNavigate();
 
   return (
-    <nav className="bg-white shadow-md top-0 fixed  w-full">
+    <nav className="bg-white shadow-md top-0 fixed w-full z-10">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         {/* Left Section: Navigation Links */}
         <div className="hidden md:flex space-x-6">
-          <Link
-            to="/blogs"
-            className="text-gray-700 hover:text-blue-600 transition font-medium"
-          >
+          <Link to="/blogs" className="text-gray-700 hover:text-blue-600 transition font-medium">
             Blogs
           </Link>
-          <Link
-            to="/about"
-            className="text-gray-700 hover:text-blue-600 transition font-medium"
-          >
+          <Link to="/about" className="text-gray-700 hover:text-blue-600 transition font-medium">
             About
           </Link>
-          <Link
-            to="/contact"
-            className="text-gray-700 hover:text-blue-600 transition font-medium"
-          >
+          <Link to="/contact" className="text-gray-700 hover:text-blue-600 transition font-medium">
             Contact
           </Link>
         </div>
@@ -42,20 +40,64 @@ const Navbar = () => {
         </div>
 
         {/* Right Section: Sign In / Sign Up */}
-        <div className="hidden md:flex space-x-4">
+        <div className="hidden md:flex space-x-10   justify-end">
           {isLoggedIn ? (
-            <Link
-              to="/profile"
-              className="px-4 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
-            >
-              My Profile
-            </Link>
+            <>
+           <button className="bg-indigo-500 text-white rounded-md px-3" onClick={()=>navigate("/addblog")}>+ Add your blog</button>
+            <Menu as="div" className="relative">
+              <MenuButton className="flex items-center focus:outline-none">
+                <img
+                  alt="User"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  className="w-8 h-8 rounded-full"
+                />
+              </MenuButton>
+              <MenuItems className="absolute right-0 mt-2 w-48 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black/5">
+                <MenuItem>
+                  {({ active }) => (
+                    <Link
+                      to="/profile"
+                      className={`block px-4 py-2 text-sm ${
+                        active ? "bg-gray-100" : ""
+                      }`}
+                    >
+                      Your Profile
+                    </Link>
+                  )}
+                </MenuItem>
+                <MenuItem>
+                  {({ active }) => (
+                    <Link
+                      to="/settings"
+                      className={`block px-4 py-2 text-sm ${
+                        active ? "bg-gray-100" : ""
+                      }`}
+                    >
+                      Settings
+                    </Link>
+                  )}
+                </MenuItem>
+                <MenuItem>
+                  {({ active }) => (
+                    <button
+                      onClick={() => {
+                        localStorage.removeItem("authToken");
+                        setIsLoggedIn(false);
+                      }}
+                      className={`block w-full text-left px-4 py-2 text-sm ${
+                        active ? "bg-gray-100" : ""
+                      }`}
+                    >
+                      Sign out
+                    </button>
+                  )}
+                </MenuItem>
+              </MenuItems>
+            </Menu>
+            </>
           ) : (
             <>
-              <Link
-                to="/login"
-                className="px-4 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
-              >
+              <Link to="/login" className="px-4 py-2 text-gray-700 hover:text-blue-600 transition font-medium">
                 Sign In
               </Link>
               <Link
@@ -67,7 +109,6 @@ const Navbar = () => {
             </>
           )}
         </div>
-
 
         {/* Hamburger Menu for Mobile */}
         <div className="block md:hidden">
@@ -96,41 +137,40 @@ const Navbar = () => {
       {/* Dropdown Menu for Mobile */}
       {isOpen && (
         <div className="md:hidden bg-gray-50 border-t border-gray-200">
-          <Link
-            to="/blogs"
-            className="block px-4 py-2 text-gray-700 hover:bg-blue-100 transition"
-            onClick={() => setIsOpen(false)}
-          >
+          <Link to="/blogs" className="block px-4 py-2 text-gray-700 hover:bg-blue-100" onClick={() => setIsOpen(false)}>
             Blogs
           </Link>
-          <Link
-            to="/about"
-            className="block px-4 py-2 text-gray-700 hover:bg-blue-100 transition"
-            onClick={() => setIsOpen(false)}
-          >
+          <Link to="/about" className="block px-4 py-2 text-gray-700 hover:bg-blue-100" onClick={() => setIsOpen(false)}>
             About
           </Link>
-          <Link
-            to="/contact"
-            className="block px-4 py-2 text-gray-700 hover:bg-blue-100 transition"
-            onClick={() => setIsOpen(false)}
-          >
+          <Link to="/contact" className="block px-4 py-2 text-gray-700 hover:bg-blue-100" onClick={() => setIsOpen(false)}>
             Contact
           </Link>
-          <Link
-            to="/signin"
-            className="block px-4 py-2 text-gray-700 hover:bg-blue-100 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Sign In
-          </Link>
-          <Link
-            to="/signup"
-            className="block px-4 py-2 text-blue-600 hover:bg-blue-200 font-medium transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Sign Up
-          </Link>
+          {!isLoggedIn ? (
+            <>
+              <Link to="/login" className="block px-4 py-2 text-gray-700 hover:bg-blue-100" onClick={() => setIsOpen(false)}>
+                Sign In
+              </Link>
+              <Link
+                to="/signup"
+                className="block px-4 py-2 text-blue-600 hover:bg-blue-200 font-medium"
+                onClick={() => setIsOpen(false)}
+              >
+                Sign Up
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                localStorage.removeItem("authToken");
+                setIsLoggedIn(false);
+              }}
+              className="block px-4 py-2 text-red-600 hover:bg-red-100 font-medium"
+            >
+              Sign Out
+            </button>
+          )}
         </div>
       )}
     </nav>
