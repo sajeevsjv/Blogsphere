@@ -64,7 +64,7 @@ const Home = () => {
           <h2 className="text-3xl font-semibold text-gray-800 text-center">Featured Blogs</h2>
           <p className="text-gray-600 text-center mt-2">Check out our most popular and engaging articles.</p>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-6  sm:grid-cols-2 lg:grid-cols-3">
             {blogs?.length > 0 ? (
               blogs.map((blog) => (
                 <article

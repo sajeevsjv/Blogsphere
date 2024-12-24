@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 
 const BlogViewPage = () => {
   const { id } = useParams(); // Get the blog ID from the URL
@@ -22,7 +23,7 @@ const BlogViewPage = () => {
     };
 
     fetchBlog();
-  }, [id]);
+  }, []);
 
   if (loading) {
     return <p className="text-center text-gray-500">Loading blog...</p>;
@@ -40,14 +41,16 @@ const BlogViewPage = () => {
   const paragraphs = blog.content.split("\n").filter((p) => p.trim() !== "");
 
   return (
-    <div className="container mx-auto px-6 py-8">
+    <>
+    <Navbar/>
+    <div className="container mx-auto  mt-16 px-6 py-8">
       <article className="bg-white rounded-lg shadow-md p-6">
         {/* Blog Cover Image */}
         {blog.image ? (
           <img
-            src={blog.image}
+            src={`http://localhost:3005/${blog.image}` || "Blog Cover"}
             alt={blog.title || "Blog Cover"}
-            className="w-full h-64 object-cover rounded-md mb-6"
+            className="w-full h-96 object-fill rounded-md mb-6"
           />
         ) : (
           <div className="w-full h-64 bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white text-2xl font-semibold rounded-md mb-6">
@@ -67,7 +70,7 @@ const BlogViewPage = () => {
               day: "numeric",
             })}
           </span>
-          <span> • </span>
+          <span className="text-md"> • </span>
           <span>{blog.category}</span>
         </div>
 
@@ -79,18 +82,23 @@ const BlogViewPage = () => {
         </div>
 
         {/* Blog Tags */}
-        {blog.tags?.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-6">
-            {blog.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="px-3 py-1 text-sm bg-blue-100 text-blue-600 rounded-full"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-        )}
+        <div>
+          {blog.tags?.length > 0 ? (
+            <div className="flex flex-wrap gap-2 mt-6" aria-label="Blog tags">
+              {blog.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 text-sm bg-blue-100 text-blue-600 rounded-full"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 mt-6">No tags available</p>
+          )}
+        </div>
+
 
         {/* Likes and Comments */}
         <div className="mt-8">
@@ -103,6 +111,7 @@ const BlogViewPage = () => {
         </div>
       </article>
     </div>
+    </>
   );
 };
 

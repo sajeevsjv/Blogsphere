@@ -7,6 +7,7 @@ import AddBlog from "./pages/AddBlog";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import BlogViewPage from "./pages/BlogViewPage";
+import Blog from "./pages/Blog";
 
 function Routing(){
     return(
@@ -20,6 +21,7 @@ function Routing(){
             <Route path={"/signup"} element={<Signup />} />
             <Route path={"/login"} element={<Login />} />
             <Route path={"/viewpage/:id"} element={<BlogViewPage />} />
+            <Route path={"/blogs"} element={<Blog />} />
             </Routes>
         </Router>
         </>
