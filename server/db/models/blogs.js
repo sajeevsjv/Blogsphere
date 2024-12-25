@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const blogsSchema = mongoose.Schema(
+const blogs = mongoose.Schema(
   {
     title: {
       type: String,
@@ -29,11 +29,10 @@ const blogsSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    comments: Array,
   },
   {
     timestamps: true, 
   }
 );
 
-module.exports = mongoose.model('blogs', blogsSchema);
+module.exports = mongoose.model('blogs', blogs);

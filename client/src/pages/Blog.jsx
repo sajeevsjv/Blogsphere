@@ -46,13 +46,22 @@ const Blog = () => {
     }
   };
 
+  // Function to format date as string
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   return (
     <>
       <Navbar />
       <div className="bg-gray-50 mt-16 min-h-screen">
         {/* Dropdown for "Browse By" */}
-        <div className=" p-4 md:mx-10 border-blue-100 border-b-[1px] mx-4 mt-6 rounded-lg flex justify-between items-center">
-          <h2 className="text-lg  text-gray-800">Browse By :</h2>
+        <div className="p-4 md:mx-10 border-blue-100 border-b-[1px] mx-4 mt-6 rounded-lg flex justify-between items-center">
+          <h2 className="text-lg text-gray-800">Browse By :</h2>
           <select
             className="outline-none rounded-lg px-3 text-justify py-2 bg-transparent transition"
             value={selectedCategory}
@@ -91,6 +100,11 @@ const Blog = () => {
                       No Image
                     </div>
                   )}
+                  <div className="info px-4 py-2 flex gap-1">
+                    <span>{formatDate(blog.createdAt)}</span>
+                    <span>-</span>
+                    <span>{blog.category}</span>
+                  </div>
                   {/* Blog Content */}
                   <div className="p-4">
                     <h3 className="text-lg font-semibold text-gray-800">

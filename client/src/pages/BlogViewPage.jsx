@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import CommentSection from "../components/CommentSection";
+import { useContext } from "react";
+import { DataContext } from "../components/DataProvider";
 
 const BlogViewPage = () => {
+  const {blogId, setBlogId} = useContext(DataContext);
   const { id } = useParams(); // Get the blog ID from the URL
+  setBlogId(id);
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +18,9 @@ const BlogViewPage = () => {
     // Fetch blog details
     const fetchBlog = async () => {
       try {
+        console.log("fetchblog working...");
         const response = await axios.get(`http://localhost:3005/getsingleblog/${id}`);
+        console.log("response :",response.data.data);
         setBlog(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -110,6 +117,7 @@ const BlogViewPage = () => {
           </p>
         </div>
       </article>
+      <CommentSection blogId={id} />
     </div>
     </>
   );

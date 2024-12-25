@@ -18,18 +18,21 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white shadow-md top-0 fixed w-full z-10">
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="container mx-auto px-4 lg:px-6  py-4 flex items-center justify-between">
         {/* Left Section: Navigation Links */}
-        <div className="hidden md:flex space-x-6">
+        <div className="hidden w-[45%] md:flex space-x-6">
+          <Link to="/" className="text-gray-700 hover:text-blue-600 transition font-medium">
+            Home
+          </Link>
           <Link to="/blogs" className="text-gray-700 hover:text-blue-600 transition font-medium">
             Blogs
           </Link>
           <Link to="/about" className="text-gray-700 hover:text-blue-600 transition font-medium">
             About
           </Link>
-          <Link to="/contact" className="text-gray-700 hover:text-blue-600 transition font-medium">
-            Contact
-          </Link>
+          {isLoggedIn
+            ? <Link to="/myblogs" className="text-gray-700 hover:text-blue-600 transition font-medium">My Blogs</Link>
+            : null}
         </div>
 
         {/* Center Section: Logo */}
@@ -40,7 +43,7 @@ const Navbar = () => {
         </div>
 
         {/* Right Section: Sign In / Sign Up */}
-        <div className="hidden md:flex space-x-10   justify-end">
+        <div className="hidden md:flex space-x-10 w-[45%]   justify-end">
           {isLoggedIn ? (
             <>
            <button className="bg-indigo-500 text-white rounded-md px-3" onClick={()=>navigate("/addblog")}>+ Add your blog</button>

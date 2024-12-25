@@ -146,5 +146,138 @@ exports.getSingleBlog = async (req, res) => {
       return res.status(response.statusCode).send(response);
     }
   };
+ 
   
+exports.myblogs = async (req,res) =>{
+    try{
+        let user_id = req.params.id;
+        let myblogs = await blogs.find({author : user_id});
+        if(myblogs){
+            let response = success_function({
+                statusCode : 200,
+                data : myblogs
+            })
+            return res.status(response.statusCode).send(response);
+        }
+    }
+    catch(error){
+        let response = error_function({
+            statusCode : 400,
+            message : error.message ? error.message : error
+        })
+        return res.status(response.statusCode).send(response);
+    }
+}
 
+exports.deleteBlog = async (req, res) => {
+    try {
+        let blog_id = req.params.id;
+        
+        // Attempt to delete the blog
+        let deleteblog = await blogs.deleteOne({ _id: blog_id });
+
+        // Check if a blog was deleted
+        if (deleteblog.deletedCount > 0) {
+            let response = success_function({
+                statusCode: 200,
+                message: "Blog deleted successfully"
+            });
+            return res.status(response.statusCode).send(response);
+        } else {
+            // Handle case when no blog was found
+            let response = error_function({
+                statusCode: 404,
+                message: "Blog not found"
+            });
+            return res.status(response.statusCode).send(response);
+        }
+    } catch (error) {
+        let response = error_function({
+            statusCode: 400,
+            message: error.message ? error.message : error
+        });
+        return res.status(response.statusCode).send(response);
+    }
+};
+
+exports.updateBlog = async (req, res) => {
+    try {
+      let blog_id = new mongoose.Types.ObjectId(req.params.id);
+      let data = req.body;
+  
+      // Validate required fields
+      if (!data.title || !data.content || !data.category) {
+        let response = error_function({
+          statusCode: 400,
+          message: "Title, Content, and Category are required"
+        });
+        return res.status(response.statusCode).send(response);
+      }
+  
+      // Image validation and processing
+      if (data.image) {
+        let regExp = /^data:/;
+        if (regExp.test(data.image)) {
+          let img_path = await fileUpload(data.image, "users");
+          data.image = img_path;
+          return;
+        } 
+      }
+  
+      // Debug logs
+      console.log("Filter:", { _id: blog_id });
+      console.log("Update Data:", data);
+  
+      let updateblog = await blogs.updateOne({ _id: blog_id }, { $set: data });
+  
+      if (updateblog.matchedCount === 0) {
+        let response = error_function({
+          statusCode: 404,
+          message: "Blog not found"
+        });
+        return res.status(response.statusCode).send(response);
+      }
+  
+      if (updateblog.modifiedCount > 0) {
+        let response = success_function({
+          statusCode: 200,
+          message: "Blog updated successfully"
+        });
+        return res.status(response.statusCode).send(response);
+      } else {
+        let response = error_function({
+          statusCode: 400,
+          message: "No changes made to the blog"
+        });
+        return res.status(response.statusCode).send(response);
+      }
+    } catch (error) {
+      let response = error_function({
+        statusCode: 400,
+        message: error.message ? error.message : error
+      });
+      return res.status(response.statusCode).send(response);
+    }
+  };
+
+exports.getComments = async (req,res) =>{
+  try {
+    const blog = await blogs.findById(req.params.id);
+    if (!blog) {
+      let response = error_function({
+        statusCode: 404,
+        message: "Blog not found",
+      });
+      return res.status(response.statusCode).send(response);
+    }
+
+    let response = success_function({
+      statusCode: 200,
+      data: blog.comments,
+    });
+    return res.status(response.statusCode).send(response);
+  } catch (error) {
+    console.error("Error fetching blog:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
