@@ -9,8 +9,7 @@ const blogRoutes = require("./routes/blogRoutes");
 const cors = require("cors");
 const http = require("http");
 const socketIo = require("socket.io");
-const blogs = require("./db/models/blogs");
-
+const Comment = require("./db/models/comments"); // Import the Comment model
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
@@ -20,16 +19,11 @@ const io = socketIo(server, {
   },
 });
 
+// Connect to MongoDB
 mongoConnect();
 
+// Middleware setup
 app.use(cors());
-
-app.get("/test", (req, res) => {
-  console.log("test successful");
-  res.send("Test successful");
-});
-
-// Static files and parsing middleware
 app.use(express.static("../client"));
 app.use("/upload", express.static("./upload"));
 app.use(express.json({ limit: "100mb" }));
@@ -44,36 +38,83 @@ app.use(blogRoutes);
 io.on("connection", (socket) => {
   console.log("A user connected");
 
-  // Handle new comment
+  // Handle new comment or reply
+  // working code ......
   socket.on("newComment", async (commentData) => {
     try {
-      console.log("New comment:", commentData);
-      const { blogId, comment, author } = commentData;
+      const { blogId, comment, author, parentId } = commentData;
 
-      // Ensure that the update is awaited properly
-      const updatedBlog = await blogs.findByIdAndUpdate(
-        blogId,
-        {
-          $push: {
-            comments: { comment, author, date: new Date() },
-          },
-        },
-        { new: true } // Return the updated document
-      );
+      // Log incoming data
+      console.log("Received new comment/reply data:", commentData);
 
-      // Broadcast the updated comment to all clients
-      const latestComment = updatedBlog.comments[updatedBlog.comments.length - 1];
-      io.emit("commentAdded", { blogId, comment: latestComment });
+      // Check if the user is authenticated
+      if (!author) {
+        console.log("Error: User not authenticated");
+        return socket.emit("error", { message: "You must be logged in to comment." });
+      }
+
+      if (parentId) {
+        // Adding a reply to an existing comment
+        console.log("Handling reply to parent comment:", parentId);
+
+        const parentComment = await Comment.findById(parentId);
+        
+        if (!parentComment) {
+          console.log("Error: Parent comment not found", parentId);
+          return socket.emit('error', { message: 'Parent comment not found' });
+        }
+
+        // Create the reply
+        const reply = new Comment({
+          comment,
+          author,
+          parentId,
+          blogId,
+        });
+
+        // Save the reply in the parent comment's replies array
+        parentComment.replies.push(reply);
+        await parentComment.save();
+        
+        // Broadcast the reply, including nested structure
+        console.log("Reply added successfully:", reply);
+        io.emit('commentAdded', { blogId, comment: reply, parentId });
+      } else {
+        // Adding a new top-level comment
+        console.log("Handling new top-level comment for blogId:", blogId);
+
+        const newComment = new Comment({
+          blogId,
+          author,
+          comment,
+        });
+
+        await newComment.save();
+
+        console.log("New comment added successfully:", newComment);
+
+        // Broadcast the new top-level comment
+        io.emit('commentAdded', { blogId, comment: newComment });
+      }
     } catch (error) {
-      console.error("Error adding comment:", error);
+      console.error("Error adding comment/reply:", error);
+      socket.emit("error", { message: "Failed to add comment/reply." });
     }
   });
 
+  // Handle user disconnect
   socket.on("disconnect", () => {
     console.log("A user disconnected");
   });
 });
 
+
+
+// Test route to ensure server is working
+app.get("/test", (req, res) => {
+  console.log("Test successful");
+  res.send("Test successful");
+});
 
 // Start the server
 server.listen(process.env.PORT, () => {
