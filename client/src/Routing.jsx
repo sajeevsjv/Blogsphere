@@ -11,6 +11,7 @@ import Blog from "./pages/Blog";
 import MyBlogs from "./pages/MyBlogs";
 import EditBlog from "./pages/EditBlog";
 import CommentSection from "./components/CommentSection";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function Routing(){
     return(
@@ -28,6 +29,7 @@ function Routing(){
             <Route path={"/myblogs"} element={<MyBlogs />} />
             <Route path={"/editblog/:blogId"} element={<EditBlog />} />
             <Route path={"/commentsection"} element={<CommentSection />} />
+            <Route path={"/admin"} element={<AdminDashboard />} />
             </Routes>
         </Router>
         </>

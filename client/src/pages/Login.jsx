@@ -46,9 +46,17 @@ const Login = () => {
       localStorage.setItem('user_id', user_id);
       localStorage.setItem('user_type', user_type);
 
-      setTimeout(() => {
-        navigate('/');
-      }, 2000);
+      const admin_user_type = "67472a35659bfab478d1ef7e";
+      if (user_type === admin_user_type){
+        setTimeout(() => {
+          navigate('/admin');
+        }, 2000);
+      }
+      else{
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+      }
     } catch (error) {
       if (error.response) {
         const { message } = error.response.data;

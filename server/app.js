@@ -10,6 +10,7 @@ const cors = require("cors");
 const http = require("http");
 const socketIo = require("socket.io");
 const Comment = require("./db/models/comments"); // Import the Comment model
+const Blog = require("./db/models/blogs"); // Correct the import here for Blog model
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
@@ -39,7 +40,6 @@ io.on("connection", (socket) => {
   console.log("A user connected");
 
   // Handle new comment or reply
-  // working code ......
   socket.on("newComment", async (commentData) => {
     try {
       const { blogId, comment, author, parentId } = commentData;
@@ -102,13 +102,41 @@ io.on("connection", (socket) => {
     }
   });
 
+  // Handle like/unlike blog
+  socket.on("likeBlog", async ({ blogId, userId }) => {
+    try {
+      const blog = await Blog.findById(blogId);
+  
+      if (!blog) {
+        return socket.emit('error', { message: 'Blog not found' });
+      }
+  
+      // Toggle like
+      const index = blog.likes.indexOf(userId);
+      if (index === -1) {
+        // If the user hasn't liked the blog, add them to the likes array
+        blog.likes.push(userId);
+      } else {
+        // If the user has already liked, remove them from the likes array
+        blog.likes.splice(index, 1);
+      }
+  
+      await blog.save();
+  
+      // Emit the updated likes count to all clients
+      io.emit("blogLiked", { blogId, likes: blog.likes.length });
+  
+    } catch (error) {
+      console.error("Error handling like/unlike:", error);
+      socket.emit("error", { message: "Failed to like/unlike blog." });
+    }
+  });
+
   // Handle user disconnect
   socket.on("disconnect", () => {
     console.log("A user disconnected");
   });
 });
-
-
 
 // Test route to ensure server is working
 app.get("/test", (req, res) => {
