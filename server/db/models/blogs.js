@@ -11,18 +11,18 @@ const blogs = mongoose.Schema(
       required: true,
     },
     author: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'users',
-    },
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "users",
+          required: true,
+   },
     category: {
       type: String,
       required: true,
     },
     tags: [
       {
-        type: String,
-        required: false,
-      },
+        type: String
+      }
     ],
     image: String,
     likes: {

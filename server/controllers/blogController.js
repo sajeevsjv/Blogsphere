@@ -90,7 +90,7 @@ exports.addBlog = async (req, res) => {
 
 exports.getAllBlogs = async (req, res) => {
   try {
-    const allblogs = await blogs.find();
+    const allblogs = await blogs.find().populate('author');
     let response = success_function({
       statusCode: 200,
       data: allblogs

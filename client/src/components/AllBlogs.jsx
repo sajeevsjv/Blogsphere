@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 
-const Blog = () => {
+const AllBlogs = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [blogs, setBlogs] = useState([]);
@@ -95,7 +95,6 @@ const Blog = () => {
 
   return (
     <>
-      <Navbar />
       <div className="bg-gray-50 mt-16 min-h-screen">
         {/* Search and Category Filter */}
         <div className="p-4 md:mx-10 border-blue-100 border-b-[1px] mx-4 mt-6 rounded-lg flex flex-col md:flex-row gap-4 justify-between items-center">
@@ -151,9 +150,11 @@ const Blog = () => {
                       No Image
                     </div>
                   )}
-                  <div className="info px-4 py-2 flex gap-1">
-                    <span>{formatDate(blog.createdAt)}</span>
+                  <div className="info text-sm px-4 py-2 flex text-gray-400 gap-1">
+                    <span>by {blog.author?.name}</span>
                     <span>-</span>
+                    <span>{formatDate(blog.createdAt)}</span>
+                    <span >-</span>
                     <span>{blog.category}</span>
                   </div>
                   {/* Blog Content */}
@@ -190,9 +191,8 @@ const Blog = () => {
           )}
         </main>
       </div>
-      <Footer />
     </>
   );
 };
 
-export default Blog;
+export default AllBlogs;

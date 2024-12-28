@@ -112,7 +112,7 @@ exports.signup = async function (req, res) {
 
 exports.getAllUsers = async(req, res) => {
   try{
-    let allUsers = await users.find();
+    let allUsers = await users.find()
 
     if(allUsers){
       let response = success_function({
@@ -134,7 +134,7 @@ exports.getAllUsers = async(req, res) => {
 exports.getSingleUser = async (req,res) =>{
   try{
     let _id = req.params.id;
-    let user = await users.findOne({_id}).populate("cart.product")
+    let user = await users.findOne({_id})
     if(user){
       let response = success_function({
         statusCode : 200,

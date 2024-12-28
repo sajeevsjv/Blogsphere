@@ -147,11 +147,8 @@ const CommentSection = () => {
         />
         <div className="flex items-center space-x-2">
           <EmojiPickerComponent onEmojiSelect={handleEmojiSelect} />
-          <button
-            onClick={handleCommentSubmit}
-            className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
-          >
-            Submit
+          <button onClick={handleCommentSubmit} className="rounded-full">
+          <img width="45" height="45" src="https://img.icons8.com/color/50/send-letter.png" alt="send-letter"/>  
           </button>
         </div>
         <CommentList comments={comments} onReplySubmit={handleReplySubmit} />
@@ -231,19 +228,11 @@ const CommentItem = ({ comment, onReplySubmit }) => {
               placeholder="Write a reply..."
               className="w-full p-4 border border-gray-300 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
             />
-            {/* Emoji Picker Toggle Button */}
-            <button
-              onClick={() => setShowEmojiPicker((prev) => !prev)}
-              className="absolute top-2 right-2 text-xl"
-            >
-              😀
-            </button>
-            {/* Emoji Picker */}
-            {showEmojiPicker && (
-              <div className="absolute bottom-10 right-0">
+    
+              <div className="absolute bottom-10 top-2  right-1">
                 <EmojiPickerComponent onEmojiSelect={handleEmojiSelect} />
               </div>
-            )}
+            
           </div>
           <button
             onClick={handleReply}
