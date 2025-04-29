@@ -11,4 +11,154 @@
     font-family: "Syne",sans-serif;
 }
 
+.dropdown-down {
+    appearance: none; /* Hide default arrow for custom styling if desired */
+  }
+  
+  .dropdown-down:focus {
+    overflow: visible; /* Ensure dropdown expands properly */
+  }
+  
+  .dropdown-down option {
+    direction: ltr; /* Ensure left-to-right text for categories */
+  }
+  
+  .dropdown-down::-ms-expand {
+    display: none; /* Hide the dropdown arrow in IE and Edge */
+  }
+  
+  .comments-list {
+    margin-left: 20px; /* Indent replies */
+  }
+  
+  .comment-item {
+    margin-bottom: 1rem;
+    box-shadow: rgb(204, 247, 255) 0px 30px 60px -12px inset, rgba(100, 172, 255, 0.3) 0px 18px 36px -18px inset;
+  }
+  
+  .reply-box {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .reply-textarea {
+    width: 100%;
+    height: 60px;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .reply-btn,
+  .submit-reply-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
+  .reply-btn:hover,
+  .submit-reply-btn:hover {
+    background: #0056b3;
+  }
 
+  ion-icon {
+    font-size: 20px;
+    color:#ffffff
+  }
+ 
+  
+
+  /* From Uiverse.io by Priyanshu02020 */ 
+#heart {
+  display: none;
+}
+
+.like-button {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  height: 34px;
+  width: 136px;
+  border-radius: 4px;
+  border: none;
+  background-color: #3DD9EB;
+  overflow: hidden;
+}
+
+.like {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.like-icon {
+  fill: #eeeeee;
+  height: 24px;
+  width: 24px;
+}
+
+.like-text {
+  color: #fcfcfc;
+  font-size: 16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.like-count {
+  position: absolute;
+  right: 0;
+  width: 30%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-size: 16px;
+  border-left: 2px solid #4e4e4e;
+  transition: all 0.5s ease-out;
+}
+
+.like-count.two {
+  transform: translateY(40px);
+}
+
+.on:checked ~ .like .like-icon {
+  fill: #ff7474;
+  animation: enlarge 0.2s ease-out 1;
+  transition: all 0.2s ease-out;
+}
+
+.on:checked ~ .like-count.two {
+  transform: translateX(0);
+  color: #fcfcfc;
+}
+
+.on:checked ~ .like-count.one {
+  transform: translateY(-40px);
+}
+
+.admin_card{
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.home_search{
+  border: none;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+;
+}
+
+@keyframes enlarge {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}

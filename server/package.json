@@ -8,7 +8,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.1",
     "mongoosejs-cli": "^1.0.7",
-    "nodemailer": "^6.9.15"
+    "nodemailer": "^6.9.15",
+    "socket.io": "^4.8.1"
   },
   "name": "server",
   "version": "1.0.0",

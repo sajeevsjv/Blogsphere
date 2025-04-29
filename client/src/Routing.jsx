@@ -6,6 +6,13 @@ import Home from "./pages/Home";
 import AddBlog from "./pages/AddBlog";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import BlogViewPage from "./pages/BlogViewPage";
+import Blog from "./pages/Blog";
+import MyBlogs from "./pages/MyBlogs";
+import EditBlog from "./pages/EditBlog";
+import CommentSection from "./components/CommentSection";
+import AdminDashboard from "./pages/AdminDashboard";
+import UserViewPage from "./pages/UsersViewPage";
 
 function Routing(){
     return(
@@ -18,6 +25,13 @@ function Routing(){
             <Route path={"/addblog"} element={<AddBlog />} />
             <Route path={"/signup"} element={<Signup />} />
             <Route path={"/login"} element={<Login />} />
+            <Route path={"/viewpage/:id"} element={<BlogViewPage />} />
+            <Route path={"/blogs"} element={<Blog />} />
+            <Route path={"/myblogs"} element={<MyBlogs />} />
+            <Route path={"/editblog/:blogId"} element={<EditBlog />} />
+            <Route path={"/commentsection"} element={<CommentSection />} />
+            <Route path={"/admin"} element={<AdminDashboard />} />
+            <Route path={"usersviewpage/:id"} element={<UserViewPage />} />
             </Routes>
         </Router>
         </>
