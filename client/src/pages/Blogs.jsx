@@ -14,7 +14,7 @@ const Blogs = () => {
   const fetchBlogs = async () => {
     try {
       const response = await axios({
-        url: "http://localhost:3005/blogs",
+        url: `${import.meta.env.VITE_API_URL}/blogs`,
         method: "GET",
         headers: authToken ? { Authorization: `Bearer ${authToken}` } : {},
       });
@@ -35,7 +35,7 @@ const Blogs = () => {
     }
     try {
       await axios({
-        url: `http://localhost:3005/blogs/${blogId}/like`,
+        url: `${import.meta.env.VITE_API_URL}/blogs/${blogId}/like`,
         method: "POST",
         headers: { Authorization: `Bearer ${authToken}` },
       });

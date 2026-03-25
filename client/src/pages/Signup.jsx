@@ -76,7 +76,7 @@ const Signup = () => {
 
       try {
         const response = await axios({
-          url: 'http://localhost:3005/signup',
+          url: `${import.meta.env.VITE_API_URL}/signup`,
           method: 'POST',
           headers: {
             'Content-type': 'application/json',

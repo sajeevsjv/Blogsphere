@@ -91,7 +91,7 @@ const AddBlog = () => {
     try {
       const authToken = localStorage.getItem("authToken");
       await axios({
-        url: "http://localhost:3005/blogs",
+        url: `${import.meta.env.VITE_API_URL}/blogs`,
         method: "POST",
         headers: {
           Authorization: `Bearer ${authToken}`,

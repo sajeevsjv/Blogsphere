@@ -17,7 +17,7 @@ const BlogView = () => {
   const fetchBlog = async () => {
     try {
       const response = await axios({
-        url: `http://localhost:3005/blogs/${blogId}`,
+        url: `${import.meta.env.VITE_API_URL}/blogs/${blogId}`,
         method: "GET",
         headers: authToken ? { Authorization: `Bearer ${authToken}` } : {},
       });
@@ -38,7 +38,7 @@ const BlogView = () => {
     }
     try {
       await axios({
-        url: `http://localhost:3005/blogs/${blogId}/like`,
+        url: `${import.meta.env.VITE_API_URL}/blogs/${blogId}/like`,
         method: "POST",
         headers: { Authorization: `Bearer ${authToken}` },
       });
@@ -52,7 +52,7 @@ const BlogView = () => {
     if (!commentDraft.trim()) return;
     try {
       await axios({
-        url: `http://localhost:3005/blogs/${blogId}/comments`,
+        url: `${import.meta.env.VITE_API_URL}/blogs/${blogId}/comments`,
         method: "POST",
         headers: authToken ? { Authorization: `Bearer ${authToken}` } : {},
         data: { text: commentDraft.trim() },
@@ -69,7 +69,7 @@ const BlogView = () => {
     if (!text) return;
     try {
       await axios({
-        url: `http://localhost:3005/blogs/${blogId}/comments/${commentId}/replies`,
+        url: `${import.meta.env.VITE_API_URL}/blogs/${blogId}/comments/${commentId}/replies`,
         method: "POST",
         headers: authToken ? { Authorization: `Bearer ${authToken}` } : {},
         data: { text },

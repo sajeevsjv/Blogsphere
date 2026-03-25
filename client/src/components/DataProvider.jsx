@@ -57,7 +57,7 @@ const DataProvider = ({ children }) => {
     (async () => {
       try {
         const res = await axios({
-          url: `http://localhost:3005/getsingleuser/${id}`,
+          url: `${import.meta.env.VITE_API_URL}/getsingleuser/${id}`,
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
