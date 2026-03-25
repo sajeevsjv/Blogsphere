@@ -30,8 +30,8 @@ exports.login = async (req, res) => {
                 let data = {
                     token,
                     user_type,
-                    user_id
-                    
+                    user_id,
+                    user_name: user.name || ""
                 }
                 let response = success_function({
                     statusCode: 200,

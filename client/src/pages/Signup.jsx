@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Signup = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -49,10 +49,9 @@ const Signup = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Validate the specific field
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: validateField(name, value)
+      [name]: validateField(name, value),
     }));
   };
 
@@ -74,108 +73,124 @@ const Signup = () => {
       setErrors(validationErrors);
     } else {
       setErrors({});
-      console.log('Form submitted:', formData);
-      
+
       try {
-        let response = await axios({
-            url: "http://localhost:3005/signup",
-            method: 'POST',
-            headers: {
-                "Content-type": "application/json"
-            },
-            data : formData
+        const response = await axios({
+          url: 'http://localhost:3005/signup',
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          data: formData,
         });
 
-        let message = response.data.message;
-        toast.success(message); // Show success toast
+        const message = response.data.message;
+        toast.success(message);
         setTimeout(() => {
-            navigate("/login");
+          navigate('/login');
         }, 2000);
       } catch (error) {
         if (error.response) {
-            let message = error.response.data.message;
-            toast.error(message); // Show error toast
+          const message = error.response.data.message;
+          toast.error(message);
         } else {
-            console.log("error:", error);
+          console.log('error:', error);
         }
       }
     }
   };
 
+  const inputClass =
+    'mt-1.5 w-full rounded-2xl border border-violet-200/80 bg-white/90 px-4 py-3 text-sm font-medium text-slate-900 placeholder:text-slate-400 shadow-inner focus:border-fuchsia-400 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 dark:border-slate-600 dark:bg-slate-900/80 dark:text-slate-100';
+
   return (
-    <>
-      <div className="flex items-center  justify-center min-h-screen bg-gray-100">
-        <div className="relative w-full max-w-md p-8 space-y-4 bg-white rounded-lg shadow-md z-10">
-          {/* Background Decorations */}
-          <div className="before:w-24 before:h-24 before:absolute before:bg-purple-500 before:rounded-full before:-z-10 before:blur-2xl after:w-40 after:h-40 after:absolute after:bg-indigo-400 after:rounded-full after:-z-10 after:blur-3xl after:top-28 after:-right-0"></div>
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-mesh-light px-4 py-16 dark:bg-mesh-dark">
+      <div className="relative z-10 w-full max-w-md overflow-hidden rounded-3xl border border-violet-200/60 bg-white/90 p-8 shadow-glow backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/90 dark:shadow-glow-dark">
+        <div className="pointer-events-none absolute -right-12 top-0 h-32 w-32 rounded-full bg-purple-400/30 blur-3xl" aria-hidden />
+        <div className="pointer-events-none absolute -bottom-8 -left-8 h-28 w-28 rounded-full bg-cyan-400/25 blur-3xl" aria-hidden />
 
-          <h2 className="text-2xl text-gray-600 font-bold mb-6">Sign Up</h2>
+        <h2 className="relative text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          Join <span className="bg-gradient-to-r from-violet-600 to-fuchsia-500 bg-clip-text text-transparent">BlogSphere</span>
+        </h2>
+        <p className="relative mt-2 text-sm font-medium text-slate-600 dark:text-slate-400">Takes like 30 seconds. Promise.</p>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="mb-4">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-600">Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md"
-              />
-              {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
-            </div>
+        <form onSubmit={handleSubmit} className="relative mt-8 space-y-4">
+          <div>
+            <label htmlFor="name" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className={inputClass}
+            />
+            {errors.name && <p className="mt-1.5 text-sm font-medium text-rose-500">{errors.name}</p>}
+          </div>
 
-            <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md"
-              />
-              {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
-            </div>
+          <div>
+            <label htmlFor="email" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className={inputClass}
+            />
+            {errors.email && <p className="mt-1.5 text-sm font-medium text-rose-500">{errors.email}</p>}
+          </div>
 
-            <div className="mb-4">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-600">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md"
-              />
-              {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
-            </div>
+          <div>
+            <label htmlFor="password" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className={inputClass}
+            />
+            {errors.password && <p className="mt-1.5 text-sm font-medium text-rose-500">{errors.password}</p>}
+          </div>
 
-            <div className="mb-4">
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-600">Confirm Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md"
-              />
-              {errors.confirmPassword && <p className="mt-1 text-sm text-red-500">{errors.confirmPassword}</p>}
-            </div>
+          <div>
+            <label htmlFor="confirmPassword" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+              Confirm password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className={inputClass}
+            />
+            {errors.confirmPassword && <p className="mt-1.5 text-sm font-medium text-rose-500">{errors.confirmPassword}</p>}
+          </div>
 
-            <div className="flex w-full">
-              <button
-                type="submit"
-                className="[background:linear-gradient(144deg,#af40ff,#5b42f3_50%,#00ddeb)] text-white px-4 py-2 w-full font-bold rounded-md hover:opacity-80"
-              >
-                Sign Up
-              </button>
-            </div>
-          </form>
-        </div>
+          <button
+            type="submit"
+            className="mt-2 w-full rounded-full bg-btn-primary py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-500/30 transition hover:bg-btn-primary-hover"
+          >
+            Create my account
+          </button>
+        </form>
+
+        <p className="relative mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
+          Already rolling?{' '}
+          <Link to="/login" className="font-bold text-violet-600 underline decoration-2 underline-offset-2 hover:text-fuchsia-600 dark:text-fuchsia-400">
+            Log in
+          </Link>
+        </p>
       </div>
-    </>
+    </div>
   );
 };
 

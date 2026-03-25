@@ -57,25 +57,27 @@ const Blogs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100/80 pt-20 pb-14 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-mesh-light pt-20 pb-14 dark:bg-mesh-dark">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <header className="mb-10 flex flex-col gap-4 border-b border-slate-200 pb-8 dark:border-slate-800 sm:flex-row sm:items-end sm:justify-between">
+        <header className="mb-10 flex flex-col gap-4 border-b border-violet-200/50 pb-8 dark:border-slate-800 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">Articles</h1>
-            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Latest posts from the community.</p>
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+              The <span className="bg-gradient-to-r from-violet-600 to-fuchsia-500 bg-clip-text text-transparent">feed</span>
+            </h1>
+            <p className="mt-2 text-sm font-medium text-slate-600 dark:text-slate-400">Fresh posts from the community — newest first.</p>
           </div>
           <button
             type="button"
             onClick={() => navigate("/addblog")}
-            className="shrink-0 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-brand-700"
+            className="shrink-0 rounded-full bg-btn-primary px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-indigo-500/25 transition hover:bg-btn-primary-hover"
           >
-            New article
+            New drop
           </button>
         </header>
 
         {blogs.length === 0 && (
-          <div className="rounded-xl border border-dashed border-slate-300 bg-white py-16 text-center dark:border-slate-700 dark:bg-slate-900">
-            <p className="text-sm text-slate-500 dark:text-slate-400">No articles yet. Publish the first one.</p>
+          <div className="rounded-3xl border-2 border-dashed border-violet-200/80 bg-white/80 py-16 text-center backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/80">
+            <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Nothing here yet — be the first to post.</p>
           </div>
         )}
 
@@ -85,7 +87,7 @@ const Blogs = () => {
 
             return (
               <li key={blog._id}>
-                <article className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-card transition hover:border-slate-300/90 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:shadow-card-dark dark:hover:border-slate-700">
+                <article className="overflow-hidden rounded-3xl border border-violet-100/90 bg-white/95 shadow-card ring-1 ring-violet-500/5 transition hover:-translate-y-0.5 hover:border-fuchsia-200/80 hover:shadow-glow dark:border-slate-800 dark:bg-slate-900/95 dark:shadow-card-dark dark:ring-fuchsia-500/10 dark:hover:border-fuchsia-500/30 dark:hover:shadow-glow-dark">
                   {blog.image && (
                     <button type="button" onClick={() => navigate(`/blogs/${blog._id}`)} className="block w-full text-left">
                       <img src={blog.image} alt="" className="h-48 w-full object-cover" />
@@ -93,17 +95,17 @@ const Blogs = () => {
                   )}
                   <div className="p-6 sm:p-8">
                     <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                      <span className="rounded-md bg-brand-50 px-2 py-0.5 font-medium text-brand-900 ring-1 ring-inset ring-brand-600/10 dark:bg-brand-950/50 dark:text-brand-200 dark:ring-brand-500/20">
+                      <span className="rounded-full bg-violet-100 px-3 py-0.5 font-bold text-violet-800 ring-1 ring-inset ring-violet-300/50 dark:bg-fuchsia-950/50 dark:text-fuchsia-200 dark:ring-fuchsia-500/20">
                         {blog.category}
                       </span>
                       {blog.createdAt && <span>{new Date(blog.createdAt).toLocaleDateString(undefined, { dateStyle: "medium" })}</span>}
                     </div>
 
-                    <h2 className="mt-3 text-xl font-semibold tracking-tight text-slate-900 dark:text-white">
+                    <h2 className="mt-3 text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                       <button
                         type="button"
                         onClick={() => navigate(`/blogs/${blog._id}`)}
-                        className="text-left transition hover:text-brand-700 dark:hover:text-brand-400"
+                        className="text-left transition hover:text-violet-700 dark:hover:text-fuchsia-300"
                       >
                         {blog.title}
                       </button>
@@ -112,33 +114,33 @@ const Blogs = () => {
 
                     <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{previewText}</p>
 
-                    <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-5 dark:border-slate-800">
+                    <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-violet-100 pt-5 dark:border-slate-800">
                       <button
                         type="button"
                         onClick={() => handleToggleLike(blog._id)}
-                        className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium transition ${
+                        className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-semibold transition ${
                           blog.liked_by_me
-                            ? "border-brand-200 bg-brand-50 text-brand-900 dark:border-brand-800 dark:bg-brand-950/40 dark:text-brand-200"
-                            : "border-slate-200 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                            ? "border-fuchsia-300 bg-fuchsia-50 text-fuchsia-900 dark:border-fuchsia-700 dark:bg-fuchsia-950/50 dark:text-fuchsia-200"
+                            : "border-slate-200 text-slate-700 hover:bg-violet-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                         }`}
                       >
                         {blog.liked_by_me ? (
-                          <HeartSolid className="h-4 w-4 text-brand-600 dark:text-brand-400" />
+                          <HeartSolid className="h-4 w-4 text-fuchsia-600 dark:text-fuchsia-400" />
                         ) : (
                           <HeartIcon className="h-4 w-4 text-slate-500 dark:text-slate-400" />
                         )}
                         {blog.likes || 0}
                       </button>
-                      <span className="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400">
+                      <span className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 dark:text-slate-400">
                         <ChatBubbleLeftRightIcon className="h-4 w-4" />
                         {(blog.comments || []).length}
                       </span>
                       <button
                         type="button"
                         onClick={() => navigate(`/blogs/${blog._id}`)}
-                        className="ml-auto text-sm font-medium text-brand-700 transition hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-300"
+                        className="ml-auto text-sm font-bold text-violet-700 transition hover:text-fuchsia-600 dark:text-fuchsia-400 dark:hover:text-fuchsia-300"
                       >
-                        Read article
+                        Read it
                       </button>
                     </div>
                   </div>

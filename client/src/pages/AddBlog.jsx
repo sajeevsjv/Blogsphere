@@ -120,15 +120,17 @@ const AddBlog = () => {
   };
 
   const inputClass =
-    "w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100";
+    "w-full rounded-2xl border border-violet-200/80 bg-white/95 px-4 py-2.5 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:border-fuchsia-400 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100/80 pt-20 pb-16 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-mesh-light pt-20 pb-16 dark:bg-mesh-dark">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <header className="mb-10 border-b border-slate-200 pb-8 dark:border-slate-800">
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white sm:text-3xl">Compose article</h1>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-            Use the rich text editor for structure, emphasis, images, and code. Changes are saved when you publish.
+        <header className="mb-10 border-b border-violet-200/50 pb-8 dark:border-slate-800">
+          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+            Compose your <span className="bg-gradient-to-r from-violet-600 to-fuchsia-500 bg-clip-text text-transparent">drop</span>
+          </h1>
+          <p className="mt-2 text-sm font-medium text-slate-600 dark:text-slate-400">
+            Rich text, images, code — everything saves when you hit publish.
           </p>
         </header>
 
@@ -156,7 +158,7 @@ const AddBlog = () => {
             <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
               Body <span className="text-red-500">*</span>
             </span>
-            <div className="overflow-hidden rounded-lg border border-slate-300 bg-white ring-1 ring-slate-900/5 dark:border-slate-600 dark:bg-slate-900 dark:ring-white/5">
+            <div className="overflow-hidden rounded-2xl border border-violet-200/80 bg-white ring-1 ring-violet-500/10 dark:border-slate-600 dark:bg-slate-900 dark:ring-fuchsia-500/10">
               <ReactQuill theme="snow" value={editorHtml} onChange={setEditorHtml} modules={modules} formats={formats} placeholder="Start writing…" />
             </div>
           </div>
@@ -178,19 +180,22 @@ const AddBlog = () => {
               name="image"
               onChange={handleChange}
               accept="image/*"
-              className="block w-full text-sm text-slate-600 file:mr-4 file:rounded-lg file:border-0 file:bg-brand-600 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white file:shadow-sm hover:file:bg-brand-700 dark:text-slate-400"
+              className="block w-full text-sm font-medium text-slate-600 file:mr-4 file:rounded-full file:border-0 file:bg-btn-primary file:px-4 file:py-2 file:text-sm file:font-bold file:text-white file:shadow-md hover:file:bg-btn-primary-hover dark:text-slate-400"
             />
           </div>
 
-          <div className="flex flex-col gap-3 border-t border-slate-200 pt-8 dark:border-slate-800 sm:flex-row sm:justify-end">
+          <div className="flex flex-col gap-3 border-t border-violet-200/50 pt-8 dark:border-slate-800 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={() => navigate("/blogs")}
-              className="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+              className="rounded-full border border-slate-300 px-6 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
             >
-              Cancel
+              Never mind
             </button>
-            <button type="submit" className="rounded-lg bg-brand-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-brand-700">
+            <button
+              type="submit"
+              className="rounded-full bg-btn-primary px-8 py-2.5 text-sm font-bold text-white shadow-lg shadow-indigo-500/25 transition hover:bg-btn-primary-hover"
+            >
               Publish
             </button>
           </div>

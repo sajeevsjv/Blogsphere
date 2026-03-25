@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply font-sans antialiased text-slate-800 dark:text-slate-100;
+  }
+}
+
 /* Rich text from Quill (read view) */
 .blog-html-content p {
   margin-bottom: 0.75em;
@@ -40,22 +49,24 @@
   margin: 0.75rem 0;
 }
 .blog-html-content a {
-  color: #2563eb;
+  color: #4f46e5;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 .dark .blog-html-content a {
-  color: #60a5fa;
+  color: #a5b4fc;
 }
 .blog-html-content blockquote {
-  border-left: 3px solid #cbd5e1;
+  border-left: 4px solid #c4b5fd;
   padding-left: 1rem;
   margin: 0.75rem 0;
   font-style: italic;
   color: #64748b;
+  border-radius: 0 0.5rem 0.5rem 0;
 }
 .dark .blog-html-content blockquote {
-  border-left-color: #3b82f6;
+  border-left-color: #818cf8;
   color: #94a3b8;
 }
 .blog-html-content pre {
