@@ -3,39 +3,39 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-8">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="border-t border-slate-200 bg-slate-900 py-12 text-slate-400 dark:border-slate-800">
+      <div className="container mx-auto max-w-6xl px-6">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {/* About Section */}
           <div>
-            <h4 className="text-lg font-semibold text-white mb-4">About BlogSphere</h4>
-            <p className="text-sm">
-              BlogSphere is your gateway to diverse blogs, ideas, and stories from around the world. Stay inspired and connected with our curated content.
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-200">About BlogSphere</h4>
+            <p className="text-sm leading-relaxed text-slate-400">
+              A focused space for long-form writing, discussion, and discovery.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
-            <ul>
-              <li className="mb-2">
-                <Link to="/blogs" className="hover:text-blue-400 transition">
-                  Blogs
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-200">Quick links</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link to="/blogs" className="transition hover:text-brand-300">
+                  Articles
                 </Link>
               </li>
-              <li className="mb-2">
-                <Link to="/about" className="hover:text-blue-400 transition">
-                  About Us
+              <li>
+                <Link to="/about" className="transition hover:text-brand-300">
+                  About
                 </Link>
               </li>
-              <li className="mb-2">
-                <Link to="/contact" className="hover:text-blue-400 transition">
+              <li>
+                <Link to="/contact" className="transition hover:text-brand-300">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" className="hover:text-blue-400 transition">
-                  Privacy Policy
+                <Link to="/privacy" className="transition hover:text-brand-300">
+                  Privacy
                 </Link>
               </li>
             </ul>
@@ -43,13 +43,13 @@ const Footer = () => {
 
           {/* Social Media */}
           <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Follow Us</h4>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-200">Follow</h4>
             <div className="flex space-x-4">
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-blue-400 transition"
+                className="transition hover:text-brand-300"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,7 @@ const Footer = () => {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-blue-400 transition"
+                className="transition hover:text-brand-300"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ const Footer = () => {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-blue-400 transition"
+                className="transition hover:text-brand-300"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -95,9 +95,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <hr className="my-6 border-gray-700" />
+        <hr className="my-8 border-slate-800" />
 
-        <div className="text-center text-sm">
+        <div className="text-center text-xs text-slate-500">
           <p>&copy; {new Date().getFullYear()} BlogSphere. All rights reserved.</p>
         </div>
       </div>

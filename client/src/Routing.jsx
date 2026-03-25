@@ -6,16 +6,20 @@ import Home from "./pages/Home";
 import AddBlog from "./pages/AddBlog";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Blogs from "./pages/Blogs";
+import BlogView from "./pages/BlogView";
 
 function Routing(){
     return(
         <>
         <ToastContainer />
         <Router>
+            <Navbar />
             <Routes>
             <Route path={"/"} element={<Home />} />
-            <Route path={"/navbar"} element={<Navbar />} />
             <Route path={"/addblog"} element={<AddBlog />} />
+            <Route path={"/blogs"} element={<Blogs />} />
+            <Route path={"/blogs/:blogId"} element={<BlogView />} />
             <Route path={"/signup"} element={<Signup />} />
             <Route path={"/login"} element={<Login />} />
             </Routes>

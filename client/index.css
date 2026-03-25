@@ -1,3 +1,97 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Rich text from Quill (read view) */
+.blog-html-content p {
+  margin-bottom: 0.75em;
+}
+.blog-html-content h1,
+.blog-html-content h2,
+.blog-html-content h3 {
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+.blog-html-content h1 {
+  font-size: 1.75rem;
+}
+.blog-html-content h2 {
+  font-size: 1.35rem;
+}
+.blog-html-content h3 {
+  font-size: 1.15rem;
+}
+.blog-html-content ul,
+.blog-html-content ol {
+  margin: 0.5em 0 0.75em 1.25rem;
+  padding-left: 0.5rem;
+}
+.blog-html-content ul {
+  list-style: disc;
+}
+.blog-html-content ol {
+  list-style: decimal;
+}
+.blog-html-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  margin: 0.75rem 0;
+}
+.blog-html-content a {
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.dark .blog-html-content a {
+  color: #60a5fa;
+}
+.blog-html-content blockquote {
+  border-left: 3px solid #cbd5e1;
+  padding-left: 1rem;
+  margin: 0.75rem 0;
+  font-style: italic;
+  color: #64748b;
+}
+.dark .blog-html-content blockquote {
+  border-left-color: #3b82f6;
+  color: #94a3b8;
+}
+.blog-html-content pre {
+  background: #f1f5f9;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+}
+.dark .blog-html-content pre {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+/* Quill editor — dark toolbar (Add Blog) */
+.dark .ql-toolbar.ql-snow {
+  background: #1e293b;
+  border-color: #334155;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+.dark .ql-container.ql-snow {
+  background: #0f172a;
+  border-color: #334155;
+  border-radius: 0 0 0.75rem 0.75rem;
+  color: #e2e8f0;
+  min-height: 280px;
+}
+.dark .ql-editor.ql-blank::before {
+  color: #64748b;
+}
+.dark .ql-snow .ql-stroke {
+  stroke: #cbd5e1;
+}
+.dark .ql-snow .ql-fill {
+  fill: #cbd5e1;
+}
+.dark .ql-snow .ql-picker {
+  color: #e2e8f0;
+}

@@ -1,136 +1,121 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
 import { DataContext } from "../components/DataProvider";
-
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoggedIn, setIsLoggedIn } = useContext(DataContext);
+  const { isLoggedIn, logout, toggleTheme, theme } = useContext(DataContext);
 
+  const navLink =
+    "text-sm font-medium text-slate-600 transition-colors hover:text-brand-700 dark:text-slate-300 dark:hover:text-white";
 
   return (
-    <nav className="bg-white shadow-md top-0 fixed  w-full">
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Left Section: Navigation Links */}
-        <div className="hidden md:flex space-x-6">
-          <Link
-            to="/blogs"
-            className="text-gray-700 hover:text-blue-600 transition font-medium"
-          >
-            Blogs
+    <nav className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+        <div className="flex min-w-0 flex-1 items-center gap-8">
+          <Link to="/" className="shrink-0 text-sm font-semibold tracking-tight text-slate-900 dark:text-white">
+            <span className="text-brand-800 dark:text-brand-300">Blog</span>Sphere
           </Link>
-          <Link
-            to="/about"
-            className="text-gray-700 hover:text-blue-600 transition font-medium"
-          >
-            About
-          </Link>
-          <Link
-            to="/contact"
-            className="text-gray-700 hover:text-blue-600 transition font-medium"
-          >
-            Contact
-          </Link>
-        </div>
-
-        {/* Center Section: Logo */}
-        <div className="text-center">
-          <Link to="/" className="text-2xl font-bold text-blue-600">
-            BlogSphere
-          </Link>
-        </div>
-
-        {/* Right Section: Sign In / Sign Up */}
-        <div className="hidden md:flex space-x-4">
-          {isLoggedIn ? (
-            <Link
-              to="/profile"
-              className="px-4 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
-            >
-              My Profile
+          <div className="hidden items-center gap-6 md:flex">
+            <Link to="/blogs" className={navLink}>
+              Articles
             </Link>
-          ) : (
+            <Link to="/addblog" className={navLink}>
+              Compose
+            </Link>
+          </div>
+        </div>
+
+        <div className="hidden items-center gap-2 md:flex">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+            title={theme === "dark" ? "Light mode" : "Dark mode"}
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
+          </button>
+          {isLoggedIn ? (
             <>
               <Link
-                to="/login"
-                className="px-4 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
+                to="/addblog"
+                className="rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-brand-700"
               >
-                Sign In
+                New post
               </Link>
-              <Link
-                to="/signup"
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition"
+              <button
+                type="button"
+                onClick={logout}
+                className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
               >
-                Sign Up
+                Sign out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">
+                Sign in
+              </Link>
+              <Link to="/signup" className="rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-brand-700">
+                Create account
               </Link>
             </>
           )}
         </div>
 
-
-        {/* Hamburger Menu for Mobile */}
-        <div className="block md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-gray-800 hover:text-blue-600 focus:outline-none"
+            type="button"
+            onClick={toggleTheme}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700"
+            aria-label="Toggle theme"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-              />
+            {theme === "dark" ? <SunIcon className="h-5 w-5 text-slate-200" /> : <MoonIcon className="h-5 w-5 text-slate-700" />}
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className="rounded-lg p-2 text-slate-700 dark:text-slate-200"
+            aria-label="Menu"
+          >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
             </svg>
           </button>
         </div>
       </div>
 
-      {/* Dropdown Menu for Mobile */}
       {isOpen && (
-        <div className="md:hidden bg-gray-50 border-t border-gray-200">
-          <Link
-            to="/blogs"
-            className="block px-4 py-2 text-gray-700 hover:bg-blue-100 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Blogs
+        <div className="border-t border-slate-200 bg-white px-2 py-3 dark:border-slate-800 dark:bg-slate-950 md:hidden">
+          <Link to="/blogs" className="block rounded-lg px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-900" onClick={() => setIsOpen(false)}>
+            Articles
           </Link>
-          <Link
-            to="/about"
-            className="block px-4 py-2 text-gray-700 hover:bg-blue-100 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            About
+          <Link to="/addblog" className="block rounded-lg px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-900" onClick={() => setIsOpen(false)}>
+            Compose
           </Link>
-          <Link
-            to="/contact"
-            className="block px-4 py-2 text-gray-700 hover:bg-blue-100 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Contact
-          </Link>
-          <Link
-            to="/signin"
-            className="block px-4 py-2 text-gray-700 hover:bg-blue-100 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Sign In
-          </Link>
-          <Link
-            to="/signup"
-            className="block px-4 py-2 text-blue-600 hover:bg-blue-200 font-medium transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Sign Up
-          </Link>
+          {isLoggedIn ? (
+            <button
+              type="button"
+              onClick={() => {
+                logout();
+                setIsOpen(false);
+              }}
+              className="block w-full rounded-lg px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-900"
+            >
+              Sign out
+            </button>
+          ) : (
+            <>
+              <Link to="/login" className="block rounded-lg px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-900" onClick={() => setIsOpen(false)}>
+                Sign in
+              </Link>
+              <Link to="/signup" className="block rounded-lg px-4 py-3 text-sm font-semibold text-brand-700 dark:text-brand-400" onClick={() => setIsOpen(false)}>
+                Create account
+              </Link>
+            </>
+          )}
         </div>
       )}
     </nav>

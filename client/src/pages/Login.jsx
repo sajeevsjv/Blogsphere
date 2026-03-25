@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { DataContext } from '../components/DataProvider';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setIsLoggedIn } = useContext(DataContext);
 
   const [data, setData] = useState({
     email: '',
@@ -45,6 +47,7 @@ const Login = () => {
       localStorage.setItem('authToken', token);
       localStorage.setItem('user_id', user_id);
       localStorage.setItem('user_type', user_type);
+      setIsLoggedIn(true);
 
       setTimeout(() => {
         navigate('/');
