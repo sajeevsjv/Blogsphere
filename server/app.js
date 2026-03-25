@@ -10,7 +10,9 @@ const cors = require("cors");
 
 mongoConnect();
 
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
 
 app.get("/test", (req, res) => {
     console.log("test successful");
