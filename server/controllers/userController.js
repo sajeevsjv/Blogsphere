@@ -20,8 +20,8 @@ exports.signup = async function (req, res) {
 
     password = body.password;
 
-    let count = await users.countDocuments({ email: emails });
-    console.log("count : ", count);
+    let findUser = await users.findOne({ email: emails });
+    
 
     let user_type_fromSignup = body.user_type;
     console.log("user_type from input :",user_type_fromSignup);
@@ -30,7 +30,7 @@ exports.signup = async function (req, res) {
       body.user_type = usertype._id;
     }
     
-    if (count > 0) {
+    if (findUser) {
       let response = error_function({
         statusCode: 400,
         message: "user already exists"
