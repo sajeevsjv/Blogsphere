@@ -13,7 +13,7 @@ mongoConnect();
 app.use(cors({
   origin: [
     "http://localhost:5173", // local dev
-    "https://your-frontend.vercel.app" // deployed frontend
+    "https://blogsphere01.netlify.app" // deployed frontend
   ],
   credentials: true
 }));
