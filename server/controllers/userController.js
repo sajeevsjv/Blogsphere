@@ -27,7 +27,7 @@ exports.signup = async function (req, res) {
 
     let user_type_fromSignup = body.user_type;
     console.log("user_type from input :",user_type_fromSignup);
-    let usertype = await  user_types.findOne({user_type : user_type_fromSignup});
+    let usertype = await  user_types.findOne({user_type : user_type_fromSignup || "user"});
     if(usertype){
       body.user_type = usertype._id;
     }

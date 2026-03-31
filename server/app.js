@@ -11,7 +11,11 @@ const cors = require("cors");
 mongoConnect();
 
 app.use(cors({
-  origin: "*"
+  origin: [
+    "http://localhost:5173", // local dev
+    "https://your-frontend.vercel.app" // deployed frontend
+  ],
+  credentials: true
 }));
 
 app.get("/test", (req, res) => {
