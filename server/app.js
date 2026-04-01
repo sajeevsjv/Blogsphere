@@ -1,5 +1,27 @@
 const express = require('express');
+const http = require('http');
+const { Server } = require("socket.io");
 const app = express();
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: [
+      "http://localhost:5173", // local dev
+      "https://blogsphere01.netlify.app" // deployed frontend
+    ],
+    credentials: true
+  }
+});
+app.set("io", io);
+
+io.on("connection", (socket) => {
+  console.log("Client connected via socket", socket.id);
+  socket.on("disconnect", () => {
+    console.log("Client disconnected", socket.id);
+  });
+});
+
 const dotenv = require("dotenv");
 dotenv.config();
 const mongoConnect = require("./db/connect");
@@ -32,7 +54,7 @@ app.use(authRoutes);
 app.use(userRoutes);
 app.use(blogRoutes);
 
-app.listen(process.env.PORT, ()=>{
+server.listen(process.env.PORT, ()=>{
     console.log(`server running at http://localhost:${process.env.PORT}`);
 });
 

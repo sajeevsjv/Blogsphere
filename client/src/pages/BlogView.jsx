@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { ChatBubbleLeftRightIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
+import { io } from "socket.io-client";
 import BlogHtmlContent from "../components/BlogHtmlContent";
 import { isLikelyHtml } from "../utils/blogContent";
 
@@ -29,6 +30,51 @@ const BlogView = () => {
 
   useEffect(() => {
     fetchBlog();
+  }, [blogId]);
+
+  useEffect(() => {
+    const socket = io(import.meta.env.VITE_API_URL);
+    
+    socket.on("like-updated", (data) => {
+      if (data.blogId === blogId) {
+        setBlog((prev) => prev ? { ...prev, likes: data.likes } : prev);
+      }
+    });
+
+    socket.on("new-comment", (data) => {
+      if (data.blogId === blogId) {
+        setBlog((prev) => {
+          if (!prev) return prev;
+          const exists = prev.comments?.find(c => c._id === data.comment._id);
+          if (exists) return prev;
+          return {
+            ...prev,
+            comments: [...(prev.comments || []), data.comment]
+          };
+        });
+      }
+    });
+
+    socket.on("new-reply", (data) => {
+      if (data.blogId === blogId) {
+        setBlog((prev) => {
+          if (!prev) return prev;
+          const comments = prev.comments?.map(c => {
+            if (c._id === data.commentId) {
+              const exists = c.replies?.find(r => r._id === data.reply._id);
+              if (exists) return c;
+              return { ...c, replies: [...(c.replies || []), data.reply] };
+            }
+            return c;
+          });
+          return { ...prev, comments };
+        });
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, [blogId]);
 
   const handleLike = async () => {

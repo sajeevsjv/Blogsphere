@@ -165,6 +165,16 @@ exports.addComment = async (req, res) => {
             return res.status(response.statusCode).send(response);
         }
 
+        try {
+            const io = req.app.get("io");
+            if (io) {
+                const newComment = updated.comments[updated.comments.length - 1];
+                io.emit("new-comment", { blogId, comment: newComment });
+            }
+        } catch (e) {
+            console.error("Socket emit error:", e);
+        }
+
         const response = success_function({
             statusCode: 200,
             data: updated,
@@ -209,6 +219,19 @@ exports.addReply = async (req, res) => {
                 message: "Blog or comment not found"
             });
             return res.status(response.statusCode).send(response);
+        }
+
+        try {
+            const io = req.app.get("io");
+            if (io) {
+                const comment = updated.comments.find(c => c._id.toString() === commentId);
+                if (comment) {
+                    const newReply = comment.replies[comment.replies.length - 1];
+                    io.emit("new-reply", { blogId, commentId, reply: newReply });
+                }
+            }
+        } catch (e) {
+            console.error("Socket emit error:", e);
         }
 
         const response = success_function({
@@ -258,6 +281,15 @@ exports.toggleLike = async (req, res) => {
 
         blog.likes = blog.liked_by.length;
         await blog.save();
+
+        try {
+            const io = req.app.get("io");
+            if (io) {
+                io.emit("like-updated", { blogId, likes: blog.likes });
+            }
+        } catch (e) {
+            console.error("Socket emit error:", e);
+        }
 
         const response = success_function({
             statusCode: 200,
